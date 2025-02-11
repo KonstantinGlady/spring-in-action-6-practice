@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import tacos.Ingredient;
 import tacos.Taco;
+import tacos.TacoOrder;
 
 import java.util.Arrays;
 import java.util.List;
@@ -50,16 +51,25 @@ public class DesignTacoController {
                 .collect(Collectors.toList());
     }
 
+    @ModelAttribute("taco")
+    public Taco taco() {
+        return new Taco();
+    }
+
+    @ModelAttribute("tacoOrder")
+    public TacoOrder order() {
+        return new TacoOrder();
+    }
+
     @GetMapping
-    public String showDesignForm(Model model) {
-        model.addAttribute("taco", new Taco());
+    public String showDesignForm() {
 
         return "design";
     }
 
     @PostMapping
-    public String processTaco(Taco taco) {
-        //save taco
+    public String processTaco(Taco taco, @ModelAttribute TacoOrder tacoOrder) {
+        tacoOrder.addTaco(taco);
         log.info("Processing taco {}", taco);
 
         return "redirect:/orders/current";
