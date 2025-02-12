@@ -13,6 +13,10 @@
 
 <form method="post" th:object="${taco}">
 
+    <span class="validationError"
+          th:if="${#fields.hasErrors('ingredients')}"
+          th:error="*{ingredients}">Ingredient error</span>
+
     <div class="grid">
 
         <div class="ingredient-group" id="wrap">
@@ -64,6 +68,11 @@
 
     <h3>Give name your taco:</h3>
     <input th:field="*{name}" type="text"/>
+
+    <span class="validationError"
+          th:if="${#fields.hasErrors('name')}"
+          th:error="*{name}">Error name</span>
+
     <br/>
     <button>Submit your choose</button>
 </form>
