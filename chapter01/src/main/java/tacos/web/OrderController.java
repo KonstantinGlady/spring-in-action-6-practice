@@ -8,7 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import tacos.TacoOrder;
-import tacos.data.JdbcOrderRepository;
+import tacos.data.OrderRepository;
 
 import javax.validation.Valid;
 
@@ -18,9 +18,9 @@ import javax.validation.Valid;
 @SessionAttributes("tacoOrder")
 public class OrderController {
 
-    private final JdbcOrderRepository orderRepo;
+    private final OrderRepository orderRepo;
 
-    public OrderController(JdbcOrderRepository orderRepo) {
+    public OrderController(OrderRepository orderRepo) {
         this.orderRepo = orderRepo;
     }
 

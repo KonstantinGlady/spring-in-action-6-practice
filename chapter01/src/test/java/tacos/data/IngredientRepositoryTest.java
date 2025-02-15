@@ -15,7 +15,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class IngredientRepositoryTest {
 
     @Autowired
-    private IngredientRepository ingredientRepo;
+    IngredientRepository ingredientRepo;
 
     @Test
     void findById() {

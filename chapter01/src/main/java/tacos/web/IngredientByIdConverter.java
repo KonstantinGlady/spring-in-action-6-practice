@@ -5,11 +5,6 @@ import org.springframework.stereotype.Component;
 import tacos.Ingredient;
 import tacos.data.IngredientRepository;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static tacos.Ingredient.Type.*;
-
 @Component
 public class IngredientByIdConverter implements Converter<String, Ingredient> {
 

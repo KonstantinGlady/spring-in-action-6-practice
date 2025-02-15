@@ -11,8 +11,9 @@ import tacos.TacoOrder;
 import tacos.data.IngredientRepository;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 import static tacos.Ingredient.Type;
 
@@ -30,9 +31,11 @@ public class DesignTacoController {
 
 
     @ModelAttribute
-    private void addIngredientsToModel(Model model) {
+    public void addIngredientsToModel(Model model) {
 
-        Iterable<Ingredient> ingredients = ingredientsRepo.findAll();
+        List<Ingredient> ingredients = new ArrayList<>();
+        ingredientsRepo.findAll().forEach(ingredients::add);
+
         for (Type type : Type.values()) {
 
             model.addAttribute(type.toString().toLowerCase(),
@@ -40,9 +43,9 @@ public class DesignTacoController {
         }
     }
 
-    private Iterable<Ingredient> filterByType(Type type, Iterable<Ingredient> ingredients) {
+    private Iterable<Ingredient> filterByType(Type type, List<Ingredient> ingredients) {
 
-        return StreamSupport.stream(ingredients.spliterator(), false)
+        return ingredients.stream()
                 .filter(i -> i.getType().equals(type))
                 .collect(Collectors.toList());
     }
