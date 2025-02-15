@@ -7,10 +7,15 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
 public class TacoOrder {
+
+    private long id;
+
+    private Date placedAt;
 
     @NotBlank(message = "Name required")
     private String deliveryName;

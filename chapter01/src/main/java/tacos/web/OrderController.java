@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import tacos.TacoOrder;
+import tacos.data.JdbcOrderRepository;
 
 import javax.validation.Valid;
 
@@ -16,6 +17,12 @@ import javax.validation.Valid;
 @RequestMapping("/orders")
 @SessionAttributes("tacoOrder")
 public class OrderController {
+
+    private final JdbcOrderRepository orderRepo;
+
+    public OrderController(JdbcOrderRepository orderRepo) {
+        this.orderRepo = orderRepo;
+    }
 
     @GetMapping("/current")
     public String orderForm() {
@@ -32,6 +39,7 @@ public class OrderController {
             return "orderForm";
         }
 
+        orderRepo.save(order);
         log.info("Order submitted {}", order);
         sessionStatus.setComplete();
 
