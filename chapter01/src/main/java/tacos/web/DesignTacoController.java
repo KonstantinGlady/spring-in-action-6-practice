@@ -9,6 +9,7 @@ import tacos.Ingredient;
 import tacos.Taco;
 import tacos.TacoOrder;
 import tacos.data.IngredientRepository;
+import tacos.data.TacoRepository;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -24,9 +25,13 @@ import static tacos.Ingredient.Type;
 public class DesignTacoController {
 
     private final IngredientRepository ingredientsRepo;
+    private final TacoRepository tacoRepo;
 
-    public DesignTacoController(IngredientRepository ingredientsRepo) {
+    public DesignTacoController(IngredientRepository ingredientsRepo,
+                                TacoRepository tacoRepo) {
+
         this.ingredientsRepo = ingredientsRepo;
+        this.tacoRepo = tacoRepo;
     }
 
 
@@ -70,12 +75,15 @@ public class DesignTacoController {
     public String processTaco(@Valid Taco taco, Errors errors,
                               @ModelAttribute TacoOrder tacoOrder) {
 
+        log.info("Saving taco {}", taco);
+
         if (errors.hasErrors()) {
             return "design";
         }
 
-        tacoOrder.addTaco(taco);
-        log.info("Processing taco {}", taco);
+        Taco savedTaco = tacoRepo.save(taco);
+        tacoOrder.addTaco(savedTaco);
+
 
         return "redirect:/orders/current";
     }

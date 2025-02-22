@@ -5,7 +5,6 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +16,7 @@ public class Taco {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Date createdAt = new Date();
+    private Date createdAt;
 
     @NotNull
     @Size(min = 5, message = "Name must be at least 5 characters long")
@@ -25,10 +24,11 @@ public class Taco {
 
 
     @Size(min = 1, message = "You must choose at least one ingredient")
-    @ManyToMany()
-    private List<Ingredient> ingredients = new ArrayList<>();
+    @ManyToMany(targetEntity = Ingredient.class)
+    private List<Ingredient> ingredients;
 
-    public void addIngredient(Ingredient ingredient) {
-        ingredients.add(ingredient);
+    @PrePersist
+    public void createdAt() {
+        createdAt = new Date();
     }
 }
